@@ -1,0 +1,17 @@
+model:
+  name: "ViT-B-32"
+  pretrained: "openai"
+  prompt_template: "a video of {}"
+
+extraction:
+  num_frames: 8
+
+dataset:
+  ucf101_root: "data/ucf101/UCF-101"
+  classlist_path: "data/ucf101/ucfTrainTestlist/classInd.txt"
+  testlist_path: "data/ucf101/ucfTrainTestlist/testlist01.txt"
+  max_videos_per_class: 10
+
+evaluation:
+  top_k: 5
+  output_path: "outputs/"

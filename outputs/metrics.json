@@ -1,0 +1,31 @@
+{
+  "model": "ViT-B-32 (openai)",
+  "num_frames": 8,
+  "top1_accuracy": 58.22,
+  "top5_accuracy": 85.35,
+  "total_videos": 1010,
+  "best_classes": {
+    "applyeyemakeup": 100.0,
+    "archery": 100.0,
+    "babycrawling": 100.0,
+    "benchpress": 100.0,
+    "biking": 100.0,
+    "billiards": 100.0,
+    "blowingcandles": 100.0,
+    "bowling": 100.0,
+    "cricketshot": 100.0,
+    "cuttinginkitchen": 100.0
+  },
+  "worst_classes": {
+    "basketballdunk": 0.0,
+    "frisbeecatch": 0.0,
+    "hammering": 0.0,
+    "hammerthrow": 0.0,
+    "javelinthrow": 0.0,
+    "jugglingballs": 0.0,
+    "jumpingjack": 0.0,
+    "jumprope": 0.0,
+    "nunchucks": 0.0,
+    "parallelbars": 0.0
+  }
+}

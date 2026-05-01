@@ -1,0 +1,31 @@
+{
+  "model": "google/siglip2-base-patch16-224",
+  "num_frames": 8,
+  "top1_accuracy": 70.79,
+  "top5_accuracy": 93.27,
+  "total_videos": 1010,
+  "best_classes": {
+    "archery": 100.0,
+    "babycrawling": 100.0,
+    "bandmarching": 100.0,
+    "benchpress": 100.0,
+    "biking": 100.0,
+    "billiards": 100.0,
+    "blowdryhair": 100.0,
+    "blowingcandles": 100.0,
+    "bowling": 100.0,
+    "breaststroke": 100.0
+  },
+  "worst_classes": {
+    "balancebeam": 0.0,
+    "boxingpunchingbag": 0.0,
+    "cleanandjerk": 0.0,
+    "diving": 0.0,
+    "frontcrawl": 0.0,
+    "jugglingballs": 0.0,
+    "jumpingjack": 0.0,
+    "playingguitar": 0.0,
+    "polevault": 0.0,
+    "salsaspin": 0.0
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "model": "microsoft/xclip-base-patch16",
+  "num_frames": 8,
+  "top1_accuracy": 72.44,
+  "top5_accuracy": 91.24,
+  "total_videos": 1005,
+  "best_classes": {
+    "applyeyemakeup": 100.0,
+    "archery": 100.0,
+    "babycrawling": 100.0,
+    "basketball": 100.0,
+    "benchpress": 100.0,
+    "biking": 100.0,
+    "billiards": 100.0,
+    "blowdryhair": 100.0,
+    "blowingcandles": 100.0,
+    "bowling": 100.0
+  },
+  "worst_classes": {
+    "balancebeam": 0.0,
+    "bodyweightsquats": 0.0,
+    "boxingpunchingbag": 0.0,
+    "cricketshot": 0.0,
+    "jumpingjack": 0.0,
+    "parallelbars": 0.0,
+    "playingdaf": 0.0,
+    "pommelhorse": 0.0,
+    "salsaspin": 0.0,
+    "stillrings": 0.0
+  }
+}

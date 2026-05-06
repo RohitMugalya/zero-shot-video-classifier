@@ -10,7 +10,16 @@ license: mit
 
 # Zero-Shot Video Classifier
 
-Classify any video using natural language — no task-specific training required.
+Zero-shot video classification benchmarking CLIP ViT-B/32, SigLIP 2, and X-CLIP on UCF-101 — no task-specific training required.
+
+## Live Demo
+
+🚀 **[Try it on HuggingFace Spaces](https://huggingface.co/spaces/RohitMugalya/zero-shot-video-classifier)**
+
+> **Note:** The Space runs on a free CPU tier and may go inactive after periods of no use.
+> If you see a sleeping screen, click **Restart** and wait ~2 minutes for it to wake up.
+> The first inference after a cold start takes an additional 1–3 minutes as the selected
+> model downloads and loads into memory. Subsequent classifications in the same session are fast.
 
 ## Models
 
@@ -27,8 +36,7 @@ Classify any video using natural language — no task-specific training required
 3. Select a model
 4. Click Run — the model ranks your labels by similarity to the video content
 
-No fine-tuning, no training data needed. CLIP and SigLIP 2 encode frames independently
-and average embeddings. X-CLIP uses cross-frame attention to model temporal dynamics.
+No fine-tuning, no training data needed. CLIP and SigLIP 2 encode frames independently and average embeddings. X-CLIP uses cross-frame attention to model temporal dynamics.
 
 ## Benchmark
 

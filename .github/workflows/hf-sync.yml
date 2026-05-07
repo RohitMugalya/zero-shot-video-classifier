@@ -11,16 +11,14 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-          lfs: true
 
-      - name: Install Git LFS
-        run: |
-          git lfs install
+      - name: Install git-filter-repo
+        run: pip install git-filter-repo
 
       - name: Push to HuggingFace Space
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           git remote add hfspace https://RohitMugalya:$HF_TOKEN@huggingface.co/spaces/RohitMugalya/zero-shot-video-classifier
-          git lfs push hfspace main --all
+          git filter-repo --path assets --invert-paths --force
           git push hfspace main --force

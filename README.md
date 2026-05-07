@@ -12,9 +12,11 @@ license: mit
 
 Zero-shot video classification benchmarking CLIP ViT-B/32, SigLIP 2, and X-CLIP on UCF-101 — no task-specific training required.
 
+![Project Thumbnail](assets/thumbnail.png)
+
 ## Live Demo
 
-🚀 **[Try it on HuggingFace Spaces](https://huggingface.co/spaces/RohitMugalya/zero-shot-video-classifier)**
+👉 **[Try it on HuggingFace Spaces](https://huggingface.co/spaces/RohitMugalya/zero-shot-video-classifier)**
 
 > **Note:** The Space runs on a free CPU tier and may go inactive after periods of no use.
 > If you see a sleeping screen, click **Restart** and wait ~2 minutes for it to wake up.

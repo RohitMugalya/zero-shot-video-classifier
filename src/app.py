@@ -26,63 +26,78 @@ def load_classifier(model_key: str) -> ZeroShotVideoClassifier:
     return ZeroShotVideoClassifier(model_key=model_key)
 
 
-with st.sidebar:
-    st.title("🎬 VideoClassify")
-    st.caption("Zero-shot video understanding via vision-language models")
-    st.divider()
-
-    model_key = st.selectbox("Model", options=list(MODELS.keys()), index=0)
-
-    model_info = {
-        "CLIP ViT-B/32": "338MB · UCF-101 Top-1: 58.22% · Pure zero-shot",
-        "SigLIP 2 Base": "350MB · UCF-101 Top-1: 70.79% · Pure zero-shot",
-        "X-CLIP Base":   "780MB · UCF-101 Top-1: 72.44% · Kinetics pretrained",
-    }
-    st.caption(model_info[model_key])
-
-    st.divider()
-
-    uploaded = st.file_uploader("Upload Video", type=["mp4", "avi", "mov", "mkv"])
-    num_frames = st.slider("Frames to sample", min_value=4, max_value=16, value=8)
-
-
-st.title("Zero-Shot Video Classifier")
+st.title("🎬 Zero-Shot Video Classifier")
 st.caption("Classify any video using natural language — no task-specific training required")
+
+st.audio("assets/audios/instructions.mp3", format="audio/mp3")
 st.divider()
 
-left_col, right_col = st.columns([1.1, 0.9], gap="large")
+tab1, tab2 = st.tabs(["Classification", "Model Information"])
 
-with left_col:
-    st.subheader("Classification")
+with tab1:
+    st.subheader("Configuration")
+    c1, c2 = st.columns(2)
+    with c1:
+        model_key = st.selectbox("Model", options=list(MODELS.keys()), index=0)
+        model_info = {
+            "CLIP ViT-B/32": "338MB · UCF-101 Top-1: 58.22% · Pure zero-shot",
+            "SigLIP 2 Base": "350MB · UCF-101 Top-1: 70.79% · Pure zero-shot",
+            "X-CLIP Base":   "780MB · UCF-101 Top-1: 72.44% · Kinetics pretrained",
+        }
+        st.caption(model_info[model_key])
+    with c2:
+        num_frames = st.slider("Frames to sample", min_value=4, max_value=16, value=8)
 
-    labels_input = st.text_area(
-        "Labels (one per line)",
-        value="playing basketball\nswimming\ncooking food\nriding a bike\ndoing archery\nplaying guitar\nweightlifting\ndancing",
-        height=200
-    )
+    st.divider()
+    
+    st.subheader("Input")
+    left_col, right_col = st.columns([1.1, 0.9], gap="large")
 
-    if not uploaded:
-        st.info("Upload a video in the sidebar to get started.")
-        st.markdown("")
-        run = st.button("▶  Run Classification", use_container_width=True, type="primary", disabled=True)
-    else:
-        run = st.button("▶  Run Classification", use_container_width=True, type="primary")
+    with left_col:
+        video_source = st.radio("Select Video Source:", ["Use Sample Video", "Upload Video"], horizontal=True)
+        
+        video_path = None
+        tmp_path_to_delete = None
 
-    if uploaded and run:
+        if video_source == "Upload Video":
+            uploaded = st.file_uploader("Upload Video", type=["mp4", "avi", "mov", "mkv"])
+            if uploaded:
+                with tempfile.NamedTemporaryFile(delete=False, suffix=Path(uploaded.name).suffix) as tmp:
+                    tmp.write(uploaded.read())
+                    tmp_path_to_delete = tmp.name
+                    video_path = tmp.name
+                st.video(video_path)
+            else:
+                st.info("Please upload a video.")
+        else:
+            sample_path = "assets/videos/sample_video.mp4"
+            if os.path.exists(sample_path):
+                video_path = sample_path
+                st.video(video_path)
+            else:
+                st.warning(f"Sample video not found at {sample_path}")
+
+    with right_col:
+        labels_input = st.text_area(
+            "Labels (one per line)",
+            value="playing basketball\nswimming\ncooking food\nriding a bike\ndoing archery\nplaying guitar\nweightlifting\ndancing",
+            height=200
+        )
+        
+        can_run = video_path is not None
+        run = st.button("▶  Run Classification", use_container_width=True, type="primary", disabled=not can_run)
+
+    if run and video_path:
         labels = [l.strip() for l in labels_input.splitlines() if l.strip()]
 
         if len(labels) < 2:
             st.error("Enter at least 2 labels.")
         else:
-            with tempfile.NamedTemporaryFile(delete=False, suffix=Path(uploaded.name).suffix) as tmp:
-                tmp.write(uploaded.read())
-                tmp_path = tmp.name
-
             with st.spinner(f"Loading {model_key}..."):
                 classifier = load_classifier(model_key)
 
             with st.spinner("Extracting frames..."):
-                frames = extract_frames(tmp_path, num_frames=num_frames)
+                frames = extract_frames(video_path, num_frames=num_frames)
 
             if not frames:
                 st.error("Could not read frames from this video.")
@@ -91,8 +106,6 @@ with left_col:
                     t0 = time.time()
                     predictions = classifier.classify(frames, labels, top_k=len(labels))
                     elapsed = time.time() - t0
-
-                os.unlink(tmp_path)
 
                 st.divider()
 
@@ -118,7 +131,13 @@ with left_col:
                     with col:
                         st.image(frame, use_container_width=True)
 
-with right_col:
+        if tmp_path_to_delete and os.path.exists(tmp_path_to_delete):
+            try:
+                os.unlink(tmp_path_to_delete)
+            except PermissionError:
+                pass
+
+with tab2:
     st.subheader("Benchmark — UCF-101")
     st.caption("10 videos per class · 101 classes · 1010 videos total")
 

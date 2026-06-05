@@ -35,22 +35,7 @@ st.divider()
 tab1, tab2 = st.tabs(["Classification", "Model Information"])
 
 with tab1:
-    st.subheader("Configuration")
-    c1, c2 = st.columns(2)
-    with c1:
-        model_key = st.selectbox("Model", options=list(MODELS.keys()), index=0)
-        model_info = {
-            "CLIP ViT-B/32": "338MB · UCF-101 Top-1: 58.22% · Pure zero-shot",
-            "SigLIP 2 Base": "350MB · UCF-101 Top-1: 70.79% · Pure zero-shot",
-            "X-CLIP Base":   "780MB · UCF-101 Top-1: 72.44% · Kinetics pretrained",
-        }
-        st.caption(model_info[model_key])
-    with c2:
-        num_frames = st.slider("Frames to sample", min_value=4, max_value=16, value=8)
-
-    st.divider()
-    
-    st.subheader("Input")
+    st.subheader("Input & configuration")
     left_col, right_col = st.columns([1.1, 0.9], gap="large")
 
     with left_col:
@@ -85,7 +70,16 @@ with tab1:
         )
         
         can_run = video_path is not None
-        run = st.button("▶  Run Classification", use_container_width=True, type="primary", disabled=not can_run)
+        run = st.button("▶  Run Classification", type="primary", disabled=not can_run, width="stretch")
+
+        model_key = st.selectbox("Model", options=list(MODELS.keys()), index=0)
+        model_info = {
+            "CLIP ViT-B/32": "338MB · UCF-101 Top-1: 58.22% · Pure zero-shot",
+            "SigLIP 2 Base": "350MB · UCF-101 Top-1: 70.79% · Pure zero-shot",
+            "X-CLIP Base":   "780MB · UCF-101 Top-1: 72.44% · Kinetics pretrained",
+        }
+        st.caption(model_info[model_key])
+        num_frames = st.slider("Frames to sample", min_value=4, max_value=16, value=8)
 
     if run and video_path:
         labels = [l.strip() for l in labels_input.splitlines() if l.strip()]
@@ -129,7 +123,7 @@ with tab1:
                 cols = st.columns(len(frames))
                 for col, frame in zip(cols, frames):
                     with col:
-                        st.image(frame, use_container_width=True)
+                        st.image(frame, width="stretch")
 
         if tmp_path_to_delete and os.path.exists(tmp_path_to_delete):
             try:
@@ -149,7 +143,7 @@ with tab2:
             "Top-5":  ["85.35%", "93.27%", "91.24%"],
             "Type":   ["Pure zero-shot", "Pure zero-shot", "Kinetics pretrained"],
         },
-        use_container_width=True,
+        width="stretch",
         hide_index=True,
     )
 

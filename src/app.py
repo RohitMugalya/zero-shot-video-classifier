@@ -65,7 +65,15 @@ with tab1:
     with right_col:
         labels_input = st.text_area(
             "Labels (one per line)",
-            value="playing basketball\nswimming\ncooking food\nriding a bike\ndoing archery\nplaying guitar\nweightlifting\ndancing",
+            value="\n".join([
+                "parcel sorting",
+                "barcode scanning",
+                "package inspection",
+                "parcel loading",
+                "inventory counting",
+                "pallet wrapping",
+                "forklift operation"
+            ]),
             height=200
         )
         

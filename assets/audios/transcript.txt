@@ -1,0 +1,15 @@
+Hi! Welcome to the Zero-Shot Video Classifier. — — —
+
+So... this tool lets you classify any video using just natural language. No custom training... or massive datasets required. We basically use some really advanced Vision-Language Models to understand your video, and match it to whatever labels you provide.
+
+Here's how to get started. — — —
+
+First... head over to the 'Input & configuration' section. You can either upload your own video file... or, if you just want to test things out, select the 'Use Sample Video' option. You'll see a preview pop up right there on the screen. — — — —
+
+Next... look over to the right and enter your custom labels in the text box. Just make sure to put one label per line. These are the exact categories the model will try to match with the video. 
+
+Right below the run button, you can choose which AI model you'd like to use—like CLIP... SigLIP 2... or X-CLIP—and you can adjust how many frames you want to sample. Um... you can also just leave everything on the default settings if you want to jump straight into a quick exploration.
+
+When you're ready... hit 'Run Classification'... and watch the magic happen! — — The model will extract the frames, analyze them against your labels, and then show you its top predictions... along with a confidence score.
+
+So yeah... have fun exploring the models! Oh, and... be sure to check out the 'Model Information' tab if you want to dive into the technical benchmarks and learn a bit more about how each model works.

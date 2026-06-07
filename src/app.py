@@ -29,8 +29,13 @@ def load_classifier(model_key: str) -> ZeroShotVideoClassifier:
 st.title("🎬 Zero-Shot Video Classifier")
 st.text("Classify any video using natural language — no task-specific training required")
 
-st.info("🎧 **Audio Guide:** Play this for a quick 1-minute walkthrough of how to use the classifier!")
-st.audio("assets/audios/instructions.mp3", format="audio/mp3")
+with st.container(border=True):
+    col1, col2 = st.columns([0.6, 0.4], vertical_alignment="center")
+    with col1:
+        st.markdown("### 🎧 New here?")
+        st.caption("Play this quick 1-minute walkthrough to get started instantly.")
+    with col2:
+        st.audio("assets/audios/instructions.mp3", format="audio/mp3")
 st.divider()
 
 tab1, tab2 = st.tabs(["Classification", "Model Information"])

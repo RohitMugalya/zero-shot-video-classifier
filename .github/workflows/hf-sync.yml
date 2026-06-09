@@ -20,5 +20,5 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           git remote add hfspace https://RohitMugalya:$HF_TOKEN@huggingface.co/spaces/RohitMugalya/zero-shot-video-classifier
-          git filter-repo --path assets/images --invert-paths --force
+          git filter-repo --path assets/images --path-glob 'assets/*.png' --invert-paths --force
           git push hfspace main --force

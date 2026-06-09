@@ -94,7 +94,12 @@ with tab1:
             "X-CLIP Base":   "780MB · UCF-101 Top-1: 72.44% · Kinetics pretrained",
         }
         st.caption(model_info[model_key])
-        num_frames = st.slider("Frames to sample", min_value=4, max_value=16, value=8)
+        
+        if model_key == "X-CLIP Base":
+            num_frames = 8
+            st.slider("Frames to sample", min_value=4, max_value=16, value=8, disabled=True, help="X-CLIP's architecture requires exactly 8 frames.")
+        else:
+            num_frames = st.slider("Frames to sample", min_value=4, max_value=16, value=8)
 
     if run and video_path:
         labels = [l.strip() for l in labels_input.splitlines() if l.strip()]

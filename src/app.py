@@ -35,7 +35,9 @@ with st.container(border=True):
         st.markdown("### 🎧 New here?")
         st.caption("Play this quick 1-minute walkthrough to get started instantly.")
     with col2:
-        st.audio("assets/audios/instructions.mp3", format="audio/mp3")
+        audio_path = "assets/audios/instructions.mp3"
+        audio_url = "https://raw.githubusercontent.com/RohitMugalya/zero-shot-video-classifier/main/assets/audios/instructions.mp3"
+        st.audio(audio_path if os.path.exists(audio_path) else audio_url, format="audio/mp3")
 st.divider()
 
 tab1, tab2 = st.tabs(["Classification", "Model Information"])
@@ -62,11 +64,10 @@ with tab1:
                 st.info("Please upload a video.")
         else:
             sample_path = "assets/videos/sample_video.mp4"
-            if os.path.exists(sample_path):
-                video_path = sample_path
-                st.video(video_path)
-            else:
-                st.warning(f"Sample video not found at {sample_path}")
+            sample_url = "https://raw.githubusercontent.com/RohitMugalya/zero-shot-video-classifier/main/assets/videos/sample_video.mp4"
+            
+            video_path = sample_path if os.path.exists(sample_path) else sample_url
+            st.video(video_path)
 
     with right_col:
         labels_input = st.text_area(
@@ -105,7 +106,18 @@ with tab1:
                 classifier = load_classifier(model_key)
 
             with st.spinner("Extracting frames..."):
-                frames = extract_frames(video_path, num_frames=num_frames)
+                if video_path.startswith("http"):
+                    import urllib.request
+                    with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as tmp_vid:
+                        urllib.request.urlretrieve(video_path, tmp_vid.name)
+                        dl_path = tmp_vid.name
+                    frames = extract_frames(dl_path, num_frames=num_frames)
+                    try:
+                        os.unlink(dl_path)
+                    except:
+                        pass
+                else:
+                    frames = extract_frames(video_path, num_frames=num_frames)
 
             if not frames:
                 st.error("Could not read frames from this video.")

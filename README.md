@@ -12,7 +12,7 @@ license: mit
 
 Zero-shot video classification benchmarking CLIP ViT-B/32, SigLIP 2, and X-CLIP on UCF-101 — no task-specific training required.
 
-![Project Thumbnail](assets/thumbnail.png)
+![Project Thumbnail](assets/images/thumbnail.png)
 
 ## Live Demo
 
